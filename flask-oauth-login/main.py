@@ -48,7 +48,7 @@ def ping():
     return jsonify(ping="pong")
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def homepage():
     return render_template("index.html")
 
@@ -71,10 +71,15 @@ def logout():
 
 @app.route("/insertuser", methods=['GET', 'POST'])
 def insertUser():
+    
+    user = request.form.get('user')
+    email = request.form.get('email')
+    password = request.form.get('password')
+
     userNEW = {
-        "_user" : request.form.get('user'),
-        "email" : request.form.get('email'),
-        "password" : request.form.get('password'),
+        "_user" : user,
+        "email" : email,
+        "password" : password
     }
     dbname = get_database()
     #print(dbname)
