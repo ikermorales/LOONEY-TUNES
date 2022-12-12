@@ -4,15 +4,42 @@
 from flask import Flask, jsonify, redirect, render_template, url_for
 from flask_dance.contrib.github import github
 from flask_login import logout_user, login_required
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
+from sqlalchemy import create_engine
+from sqlalchemy_utils import database_exists, create_database
+from getpass import getpass
 
 from app.models import db, login_manager
 from app.oauth import github_blueprint
 
 
+# Get database address.
+db_addr = "localhost"
+# Get username of the database.
+db_user = "root" #input(f"Username of {db_addr}: ")
+# Get password.
+db_pass = "admin" #getpass(f"Password of {db_user}@{db_addr}: ")
+# Get the database name.
+db_name ="users"
+
+# join the inputs into a complete database url.
+url = f"mysql://{db_user}:{db_pass}@{db_addr}/{db_name}"
+
+# Create an engine object.
+engine = create_engine(url, echo=True)
+
+# Create database if it does not exist.
+if not database_exists(engine.url):
+    create_database(engine.url)
+else:
+    # Connect the database if exists.
+    engine.connect()
+
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin@localhost/users'
 app.secret_key = "supersecretkey"
 app.register_blueprint(github_blueprint, url_prefix="/login")
-
 db.init_app(app)
 login_manager.init_app(app)
 
