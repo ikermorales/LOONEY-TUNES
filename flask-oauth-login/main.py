@@ -1,7 +1,7 @@
 # main.py
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./users.db"
 
-from flask import Flask, jsonify, redirect, render_template, url_for
+from flask import Flask, jsonify, redirect, render_template, request, url_for
 from flask_dance.contrib.github import github
 from flask_login import logout_user, login_required
 from flask_sqlalchemy import SQLAlchemy
@@ -12,6 +12,7 @@ from getpass import getpass
 
 from app.models import db, login_manager
 from app.oauth import github_blueprint
+from mongo import get_database
 
 
 
@@ -66,6 +67,19 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("homepage"))
+
+
+@app.route("/insertuser", methods=['GET', 'POST'])
+def insertUser():
+    userNEW = {
+        "_user" : request.form.get('user'),
+        "email" : request.form.get('email'),
+        "password" : request.form.get('password'),
+    }
+    dbname = get_database()
+    #print(dbname)
+    dbname.users.insert_one(userNEW)
+    return render_template("_base.html")
 
 
 if __name__ == "__main__":
