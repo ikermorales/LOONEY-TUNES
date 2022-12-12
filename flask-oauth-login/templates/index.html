@@ -30,11 +30,11 @@
 			</div>
 
 			<div class="login">
-				<form>
+				<form method="POST" action="/checkuser">
 					<label for="chk" aria-hidden="true">Login</label>
-					<input type="email" name="email" placeholder="Email" required="">
-					<input type="password" name="pswd" placeholder="Password" required="">
-					<button>Login</button>
+					<input type="email" placeholder="email" name="email"  required="">
+					<input type="password" placeholder="password" name="password" required="">
+					<button type="submit">Login</button>
 				</form>
 			</div>
 	</div>

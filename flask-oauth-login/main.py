@@ -87,6 +87,18 @@ def insertUser():
     return render_template("_base.html")
 
 
+@app.route("/checkuser", methods=['GET', 'POST'])
+def checkUser():
+    dbname = get_database()
+    x = dbname.users.find_one({"email": request.form.get('email'), "password": request.form.get('password')})
+    print(x)
+    if(x != None):
+        return render_template("_base.html")
+    else:
+        print("Usuario inextistente")
+        return render_template("index.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
 
