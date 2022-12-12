@@ -14,18 +14,13 @@ from app.models import db, login_manager
 from app.oauth import github_blueprint
 
 
-# Get database address.
+
 db_addr = "localhost"
-# Get username of the database.
 db_user = "root" #input(f"Username of {db_addr}: ")
-# Get password.
 db_pass = "admin" #getpass(f"Password of {db_user}@{db_addr}: ")
-# Get the database name.
 db_name ="users"
-
-# join the inputs into a complete database url.
+# join 
 url = f"mysql://{db_user}:{db_pass}@{db_addr}/{db_name}"
-
 # Create an engine object.
 engine = create_engine(url, echo=True)
 
@@ -75,3 +70,5 @@ def logout():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
