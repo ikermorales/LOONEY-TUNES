@@ -118,12 +118,23 @@ async function cerrarConexion() {
 function getArtistas(){
   conexionar();
   
+  var sql = "SELECT * FROM artistas;";
+
+  con.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected!");
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("Result: " + result);
+    });
+  });
+  
   cerrarConexion();
 }
 
 function getCanciones(){
   conexionar();
-
+  
   cerrarConexion();
 }
 

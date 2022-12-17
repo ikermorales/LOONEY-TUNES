@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Multiverse by HTML5 UP</title>
+		<title>Canciones</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{ url_for('static',filename='assets/css/main.css') }}">
@@ -18,25 +18,31 @@
 			<div id="wrapper">
 
 				<!-- Header -->
-				<header id="header" style="display: flex; flex-flow: row wrap; gap: 10px;">
-					<form method="POST" action="/artistas">
-						<button type="submit">Artistas</button>
-					</form>
-					<form method="POST" action="/canciones">
-						<button type="submit">Canciones</button>
-					</form>
-				</header>
+					<header id="header" style="display: flex; flex-flow: row wrap; gap: 10px;">
+						<form method="POST" action="/artistas">
+							<button type="submit">Artistas</button>
+						</form>
+						<form method="POST" action="/canciones">
+							<button type="submit">Canciones</button>
+						</form>
+						
+					</header>
 
 				<!-- Main -->
 					<div id="main">
-						{% for item in artistas %}		
+
+						{% for item in canciones %}
 						<article class="thumb">
 							<a href={{item.caratula}} class="image"><img src={{item.caratula}} alt="" /></a>
 							<h2>{{item.nombre}}</h2>
-							<p>{{item.integrantes}}</p>
-							<p>{{item.anyoInicio}}</p>
+
 						</article>
      					{% endfor %}
+
+					</div>
+ 
+					<div id="footer">
+						
 					</div>
 			</div>
 
