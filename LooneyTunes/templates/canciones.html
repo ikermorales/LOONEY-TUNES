@@ -25,17 +25,42 @@
 						<form method="POST" action="/canciones">
 							<button type="submit">Canciones</button>
 						</form>
-						
+
 					</header>
 
 				<!-- Main -->
 					<div id="main">
+						
+						<div style="display: flex; flex-flow: row wrap; width: 100%;">
+						<form method="POST" action="/cancionesfiltradas" style="width: 100%; display: flex; flex-flow: row wrap;">
+						
+							<select name="combo" id="combo" style="width: fit-content;">
+								{% for a in artistas %}
+									<option value="{{a.id}}">{{a.nombre}}</option>
+								{% endfor %}
+							</select>
+
+							<select name="combo" id="combo" style="width: fit-content;">
+								{% for a in artistas %}
+									<option value="1">> 2010</option>
+									<option value="2">2010 - 2020</option>
+									<option value="3">2020 ></option>
+								{% endfor %}
+							</select>
+
+							<button style="position: absolute 0;" type="submit">Filtrar</button>
+						</form>
+					</div>
 
 						{% for item in canciones %}
 						<article class="thumb">
 							<a href={{item.caratula}} class="image"><img src={{item.caratula}} alt="" /></a>
 							<h2>{{item.nombre}}</h2>
-
+							<p>{{item.album}} - {{item.fechaLanzamiento}}
+								<p>{{item.genero}}</p>
+								<p>{{item.duracion}}</p>
+							</p>
+							
 						</article>
      					{% endfor %}
 

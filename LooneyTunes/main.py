@@ -12,9 +12,10 @@ from app.mysql import *
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin@localhost/users'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin@localhost/music'
 app.secret_key = "supersecretkey"
 dbMusica.init_app(app)
+insertarValoresPorDefecto()
 
 @app.route("/ping")
 def ping():
@@ -74,7 +75,15 @@ def canciones():
 
     return render_template("canciones.html", artistas=rs, canciones=rs2)
 
+@app.route("/cancionesfiltradas", methods=['GET','POST'])
+def cancionesFiltradas():
 
+    rs = getArtistas()
+    idArtista = request.form.get('combo')
+    rs2 = getCancionesFiltradas(idArtista)
+    #print(idArtista)
+
+    return render_template("canciones.html", artistas=rs, canciones=rs2)
 
 if __name__ == "__main__":
     app.run(debug=True)
