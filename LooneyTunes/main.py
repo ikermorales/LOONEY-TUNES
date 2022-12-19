@@ -1,12 +1,6 @@
 # main.py
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./users.db"
-import random
-import select
-from subprocess import call
-
-from flask import Flask, jsonify, redirect, render_template, request, url_for
-from getpass import getpass
-
+from flask import Flask, jsonify, render_template, request
 from app.mongo import get_database
 from app.mysql import *
 
@@ -79,8 +73,24 @@ def canciones():
 def cancionesFiltradas():
 
     rs = getArtistas()
-    idArtista = request.form.get('combo')
-    rs2 = getCancionesFiltradas(idArtista)
+    rs2 = getCanciones()
+    if(request.form.get('combo') != '-1'):
+        idArtista = request.form.get('combo')
+        rs2 = getCancionesFiltradas(idArtista)
+        
+    #print(idArtista)
+
+    return render_template("canciones.html", artistas=rs, canciones=rs2)
+
+@app.route("/cancionpuesta", methods=['GET','POST'])
+def cancionPuesta():
+
+    rs = getArtistas()
+    rs2 = getCanciones()
+    if(request.form.get('combo') != '-1'):
+        idArtista = request.form.get('combo')
+        rs2 = getCancionesFiltradas(idArtista)
+    
     #print(idArtista)
 
     return render_template("canciones.html", artistas=rs, canciones=rs2)
