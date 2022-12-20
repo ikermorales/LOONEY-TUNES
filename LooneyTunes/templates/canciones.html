@@ -22,7 +22,7 @@
 						<form method="POST" action="/artistas">
 							<button type="submit">Artistas</button>
 						</form>
-						<form method="POST" action="/canciones">
+						<form method="POST" action="/canciones/-1">
 							<button type="submit">Canciones</button>
 						</form>
 
@@ -32,15 +32,13 @@
 					<div id="main">
 						
 						<div style="display: flex; flex-flow: row wrap; width: 100%;">
-						<form method="POST" action="/cancionesfiltradas" style="width: 100%; display: flex; flex-flow: row wrap;">
-						
-							<select name="combo" id="combo" style="width: fit-content;">
+						<form method="POST" action="/canciones/0" style="width: 100%; display: flex; flex-flow: row wrap;">
+							<select name="combo" id="combo" style="width: fit-content;" value="-1">
 									<option value="-1">Artistas:</option>
 								{% for a in artistas %}
 									<option value="{{a.id}}">{{a.nombre}}</option>
 								{% endfor %}
 							</select>
-
 							<button style="position: absolute 0;" type="submit">Filtrar</button>
 						</form>
 					</div>
@@ -52,9 +50,7 @@
 							<p>{{item.album}} - {{item.fechaLanzamiento}}
 								<p>{{item.genero}}</p>
 							</p>
-							<form method="POST" action="/cancionpuesta">
-								<button type="submit">Reproducir</button>
-							</form>
+							<a href="/canciones/{{item.id}}">Play</a>
 
 							<!--
 							<audio controls autostart="0" autostart="false" preload ="none">

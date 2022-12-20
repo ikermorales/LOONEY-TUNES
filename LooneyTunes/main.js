@@ -4,15 +4,15 @@ const port = 3000
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
-  console.log("Example")
+  console.log("Example2")
 })
 
 app.post('/', function(req,res){
   res.send('Hello World2!')
-  console.log("Example")
+  console.log("Example1")
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Listening on port ${port}`)
 })
 

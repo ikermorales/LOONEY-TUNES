@@ -1,6 +1,9 @@
 # main.py
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./users.db"
+import json
 from flask import Flask, jsonify, render_template, request
+from requests import get
+import requests
 from app.mongo import get_database
 from app.mysql import *
 
@@ -62,36 +65,24 @@ def artistas():
     return render_template("_base.html", artistas=rs)
 
 
-@app.route("/canciones", methods=['GET', 'POST'])
-def canciones():
-    rs = getArtistas()
-    rs2 = getCanciones()
+@app.route("/canciones/<int:idCancion>", methods=['GET', 'POST'])
+def canciones(idCancion):
 
-    return render_template("canciones.html", artistas=rs, canciones=rs2)
-
-@app.route("/cancionesfiltradas", methods=['GET','POST'])
-def cancionesFiltradas():
-
-    rs = getArtistas()
-    rs2 = getCanciones()
-    if(request.form.get('combo') != '-1'):
-        idArtista = request.form.get('combo')
-        rs2 = getCancionesFiltradas(idArtista)
-        
-    #print(idArtista)
-
-    return render_template("canciones.html", artistas=rs, canciones=rs2)
-
-@app.route("/cancionpuesta", methods=['GET','POST'])
-def cancionPuesta():
+    if(idCancion != 0):
+        print("El ID de canción es el: " + str(idCancion))
+        response = requests.get('http://localhost:3000')
+        print(response)
+       
 
     rs = getArtistas()
     rs2 = getCanciones()
-    if(request.form.get('combo') != '-1'):
-        idArtista = request.form.get('combo')
-        rs2 = getCancionesFiltradas(idArtista)
-    
-    #print(idArtista)
+    if(request.form.get('combo') != None):
+        if(request.form.get('combo') != '-1'):
+            idArtista = request.form.get('combo')
+            rs2 = getCancionesFiltradas(idArtista)
+
+    if(request.form.get('reproducir') != None):
+            print("LOG: " + request.form.get('reproducir'))
 
     return render_template("canciones.html", artistas=rs, canciones=rs2)
 
