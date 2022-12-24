@@ -5,75 +5,156 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<title>Canciones</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{{ url_for('static',filename='assets/css/main.css') }}">
-		<noscript><link rel="stylesheet" href="{{ url_for('static',filename='assets/css/noscript.css') }}" /></noscript>
-	</head>
-	<body class="is-preload">
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+<head>
+	<title>Canciones</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="{{ url_for('static',filename='assets/css/main.css') }}">
+	<noscript>
+		<link rel="stylesheet" href="{{ url_for('static',filename='assets/css/noscript.css') }}" />
+	</noscript>
+</head>
 
-				<!-- Header -->
-					<header id="header" style="display: flex; flex-flow: row wrap; gap: 10px;">
-						<form method="POST" action="/artistas">
-							<button type="submit">Artistas</button>
-						</form>
-						<form method="POST" action="/canciones/-1">
-							<button type="submit">Canciones</button>
-						</form>
+<body class="is-preload">
 
-					</header>
+	<!-- Wrapper -->
+	<div id="wrapper">
 
-				<!-- Main -->
-					<div id="main">
-						
-						<div style="display: flex; flex-flow: row wrap; width: 100%;">
-						<form method="POST" action="/canciones/0" style="width: 100%; display: flex; flex-flow: row wrap;">
-							<select name="combo" id="combo" style="width: fit-content;" value="-1">
-									<option value="-1">Artistas:</option>
-								{% for a in artistas %}
-									<option value="{{a.id}}">{{a.nombre}}</option>
-								{% endfor %}
-							</select>
-							<button style="position: absolute 0;" type="submit">Filtrar</button>
-						</form>
-					</div>
-
-						{% for item in canciones %}
-						<article class="thumb">
-							<a href={{item.caratula}} class="image"><img src={{item.caratula}} alt="" /></a>
-							<h2>{{item.nombre}}</h2>
-							<p>{{item.album}} - {{item.fechaLanzamiento}}
-								<p>{{item.genero}}</p>
-							</p>
-							<a href="/canciones/{{item.id}}">Play</a>
-
-							<!--
-							<audio controls autostart="0" autostart="false" preload ="none">
-								<source src={{item.duracion}}>								  
-							</audio>
-							-->
-						</article>
-     					{% endfor %}
-
-					</div>
- 
-					<div id="footer">
-						
-					</div>
+		<!-- Header -->
+		<header id="header" style="display: flex; flex-flow: row wrap; gap: 10px;">
+			<form method="POST" action="/artistas">
+				<button type="submit">Artistas</button>
+			</form>
+			<form method="POST" action="/canciones/0">
+				<button type="submit">Canciones</button>
+			</form>
+			
+			<div id="audioCont" value="{{link}}">
+				<audio id="audio" src="{{link}}" preload="metadata" type="audio/mpeg">
+					Your browser does not support the audio element.
+				</audio>
+				<div>
+					<button class="btn" id="botonPlay">Play</button>
+				</div>
 			</div>
 
-		<!-- Scripts -->
-			<script src="{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
-			<script src="{{ url_for('static',filename='assets/js/jquery.poptrox.min.js') }}"></script>
-			<script src="{{ url_for('static',filename='assets/js/browser.min.js') }}"></script>
-			<script src="{{ url_for('static',filename='assets/js/breakpoints.min.js') }}"></script>
-			<script src="{{ url_for('static',filename='assets/js/util.js') }}"></script>
-			<script src="{{ url_for('static',filename='assets/js/main.js') }}"></script>
+			<script>
+				var audio = document.getElementById('audio');
+				var botonPlay = document.getElementById('botonPlay');
 
-	</body>
+				function playPause(song) {
+					if (song.paused && song.currentTime >= 0 && !song.ended) {
+						song.play();
+						botonPlay.innerHTML = "Pausa";
+					} else {
+						song.pause();
+						botonPlay.innerHTML = "Play";
+					}
+				}
+
+				function reset(btn, song) {
+					if (btn.classList.contains('playing')) {
+						btn.classList.toggle('playing');
+					}
+					song.pause();
+					song.currentTime = 0;
+				}
+
+				function progress(btn, song) {
+					setTimeout(function () {
+						var end = song.duration;
+						var current = song.currentTime;
+						var percent = current / (end / 100);
+						//check if song is at the end
+						if (current == end) {
+							reset(btn, song);
+						}
+						//set inset box shadow
+						btn.style.boxShadow = "inset " + btn.offsetWidth * (percent / 100) + "px 0px 0px 0px rgba(0,0,0,0.125)"
+						//call function again
+						progress(btn, song);
+					}, 1000);
+				}
+
+				botonPlay.addEventListener('click', function () {
+					botonPlay.classList.toggle('playing');
+					playPause(audio);
+					progress(botonPlay, audio);
+				});
+
+			</script>
+
+		</header>
+
+		<!-- Main -->
+		<div id="main">
+
+			<div style="display: flex; flex-flow: row wrap; width: 100%;">
+				<form method="POST" action="/canciones/0" style="width: 100%; display: flex; flex-flow: row wrap;">
+					<select name="combo" id="combo" style="width: fit-content;" value="-1">
+						<option value="-1">Artistas:</option>
+						{% for a in artistas %}
+						<option value="{{a.id}}">{{a.nombre}}</option>
+						{% endfor %}
+					</select>
+					<button style="position: absolute 0;" type="submit">Filtrar</button>
+				</form>
+			</div>
+
+			{% for item in canciones %}
+			<article class="thumb">
+				<a href={{item.caratula}} class="image"><img src={{item.caratula}} alt="" /></a>
+				<h2>{{item.nombre}}</h2>
+				<p>{{item.album}} - {{item.fechaLanzamiento}}
+				<p>{{item.genero}}</p>
+				</p>
+				<a href="/canciones/{{item.id}}">Play</a>
+			</article>
+			{% endfor %}
+
+		</div>
+
+		<div class="container">
+			<div class="column add-bottom">
+				<div id="mainwrap">
+					<div id="nowPlay">
+						<span id="npAction">Paused...</span><span id="npTitle"></span>
+					</div>
+					<div id="audiowrap">
+						<div id="audio0">
+							<audio id="audio1" preload controls>Your browser does not support HTML5 Audio! 😢</audio>
+						</div>
+						<div id="tracks">
+							<a id="btnPrev">&larr;</a><a id="btnNext">&rarr;</a>
+						</div>
+					</div>
+					<div id="plwrap">
+						<ul id="plList"></ul>
+					</div>
+				</div>
+			</div>
+			<div class="column add-bottom center">
+				<p>Music by <a href="http://www.mythium.net/">Mythium</a></p>
+				<p>Download: <a href="https://archive.org/download/mythium/mythium_vbr_mp3.zip">zip</a> / <a
+						href="https://archive.org/download/mythium/mythium_archive.torrent">torrent</a></p>
+			</div>
+		</div>
+
+
+		<div id="footer">
+
+		</div>
+	</div>
+
+	<!-- Scripts -->
+	<script src="{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='assets/js/jquery.poptrox.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='assets/js/browser.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='assets/js/breakpoints.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='assets/js/util.js') }}"></script>
+	<script src="{{ url_for('static',filename='assets/js/main.js') }}"></script>
+
+</body>
+
 </html>

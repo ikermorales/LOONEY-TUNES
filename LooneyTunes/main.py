@@ -1,6 +1,7 @@
 # main.py
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./users.db"
 import json
+import time
 from flask import Flask, jsonify, render_template, request
 from requests import get
 import requests
@@ -71,20 +72,24 @@ def canciones(idCancion):
     if(idCancion != 0):
         print("El ID de canción es el: " + str(idCancion))
         response = requests.get('http://localhost:3000/' + str(idCancion))
-        print(response)
-       
+      
+        linkCancion = str(response.text)
 
-    rs = getArtistas()
-    rs2 = getCanciones()
-    if(request.form.get('combo') != None):
-        if(request.form.get('combo') != '-1'):
-            idArtista = request.form.get('combo')
-            rs2 = getCancionesFiltradas(idArtista)
+        rs = getArtistas()
+        rs2 = getCanciones()
+        if(request.form.get('combo') != None):
+            if(request.form.get('combo') != '-1'):
+                idArtista = request.form.get('combo')
+                rs2 = getCancionesFiltradas(idArtista)
+        
+        return render_template("canciones.html", artistas=rs, canciones=rs2, link=linkCancion)
 
-    if(request.form.get('reproducir') != None):
-            print("LOG: " + request.form.get('reproducir'))
-
-    return render_template("canciones.html", artistas=rs, canciones=rs2)
+    else:
+        print("Sin cancion a reproducir")
+        rs = getArtistas()
+        rs2 = getCanciones()
+        linkCancion = None
+        return render_template("canciones.html", artistas=rs, canciones=rs2, link=linkCancion)
 
 if __name__ == "__main__":
     app.run(debug=True)
