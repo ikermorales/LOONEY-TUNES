@@ -70,7 +70,7 @@ def canciones(idCancion):
 
     if(idCancion != 0):
         print("El ID de canción es el: " + str(idCancion))
-        response = requests.get('http://localhost:3000')
+        response = requests.get('http://localhost:3000/' + str(idCancion))
         print(response)
        
 
