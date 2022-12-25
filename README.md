@@ -2,12 +2,12 @@
 
 1. PIP INSTALL | NPM INSTALL:
 
-python -m pip install requests \n
-pip install flask_sqlalchemy
-pip install sqlalchemy_utils
-pip install mysql
-npm install mysql
-npm install express
+python -m pip install requests <br />
+pip install flask_sqlalchemy <br />
+pip install sqlalchemy_utils <br />
+pip install mysql <br />
+npm install mysql <br />
+npm install express <br />
 
 
 2. Run Python server
@@ -29,4 +29,4 @@ main.js
 ![image](https://user-images.githubusercontent.com/72606629/209454727-755b07fc-1dfd-4c44-aa6f-0dec3f67a973.png)
 
 mysql.py
-<img width="204" alt="image" src="https://user-images.githubusercontent.com/72606629/209454739-399e01b4-5f2b-4067-9b47-ba94b0aab4ba.png">
+![image](https://user-images.githubusercontent.com/72606629/209454739-399e01b4-5f2b-4067-9b47-ba94b0aab4ba.png)
