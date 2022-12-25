@@ -28,5 +28,6 @@ cambiar dichos Strings si no se corresponden con el usuario y contraseña de mys
 main.js<br />
 ![image](https://user-images.githubusercontent.com/72606629/209454727-755b07fc-1dfd-4c44-aa6f-0dec3f67a973.png)
 <br />
+<br />
 mysql.py<br />
 ![image](https://user-images.githubusercontent.com/72606629/209454739-399e01b4-5f2b-4067-9b47-ba94b0aab4ba.png)
