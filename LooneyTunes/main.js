@@ -6,7 +6,7 @@ function conexionar(){
   con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "admin"
+    password: "root"
   });
 }
 
