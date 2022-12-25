@@ -2,7 +2,7 @@
 
 1. PIP INSTALL | NPM INSTALL:
 
-python -m pip install requests
+python -m pip install requests \n
 pip install flask_sqlalchemy
 pip install sqlalchemy_utils
 pip install mysql
