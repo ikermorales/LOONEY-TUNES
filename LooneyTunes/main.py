@@ -89,6 +89,12 @@ def canciones(idCancion):
         rs = getArtistas()
         rs2 = getCanciones()
         linkCancion = None
+
+        if(request.form.get('combo') != None):
+            if(request.form.get('combo') != '-1'):
+                idArtista = request.form.get('combo')
+                rs2 = getCancionesFiltradas(idArtista)
+
         return render_template("canciones.html", artistas=rs, canciones=rs2, link=linkCancion)
 
 if __name__ == "__main__":
