@@ -1,13 +1,9 @@
 <!DOCTYPE HTML>
-<!--
-	Multiverse by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
 <html>
 
 <head>
-	<title>Canciones</title>
+	<title>	Looney Tunes </title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="{{ url_for('static',filename='assets/css/main.css') }}">
@@ -30,7 +26,7 @@
 				<button type="submit">Canciones</button>
 			</form>
 	
-			<div class="player">
+			<div class="player" id="audioCont" value={{link}}>
 				<audio style="background-color:#C8C8C8;" autoplay controls>
 			    	<source src="{{link}}">
 			     	Your Browser Does Not Support Radio</audio>
