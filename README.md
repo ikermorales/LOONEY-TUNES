@@ -2,12 +2,8 @@
 
 1. PIP INSTALL | NPM INSTALL:
 
-python -m pip install requests <br />
-pip install flask_sqlalchemy <br />
-pip install sqlalchemy_utils <br />
-pip install mysql <br />
-npm install mysql <br />
-npm install express <br />
+1.1 python pip install -r requeriments.txt <br />
+1.2 npm install
 <br />
 <br />
 2. Run Python server
