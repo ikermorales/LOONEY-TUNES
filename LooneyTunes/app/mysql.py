@@ -3,11 +3,10 @@ from sqlalchemy import create_engine
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
 
-
 dbMusica = SQLAlchemy() 
 db_addr = "localhost"
-db_user = "root" 
-db_pass = "root" 
+db_user = "root" #input(f"Username of {db_addr}: ")
+db_pass = "root" #input(f"Password of {db_user}@{db_addr}: ")
 db_name ="music"
     
 # juntalo 
@@ -20,7 +19,6 @@ if not database_exists(engine.url):
 else:
     # Connect the database if exists.
     engine.connect()
-
 
 
 def insertarValoresPorDefecto():

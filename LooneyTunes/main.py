@@ -10,8 +10,7 @@ from app.mysql import *
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin@localhost/music'
-app.secret_key = "supersecretkey"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/music'
 dbMusica.init_app(app)
 insertarValoresPorDefecto()
 
